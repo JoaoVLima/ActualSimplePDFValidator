@@ -20,8 +20,8 @@ endobj
 << /Type /Page % Defines this object as a "Page".
 /Parent 2 0 R % Links this page to the parent "Pages" node (object 2).
 /Resources << /Font << /F1 4 0 R >> >> % Defines font resources (object 4 is used for font settings).
-/MediaBox [0 0 595.0 842.0] % Defines the page size in points (A4).
-/CropBox [10 10 585 832] % Defines the visible area of the page with 10-point margin
+/MediaBox [0 0 595 842] % Defines the page size in points (A4).
+/CropBox [10 10 585 832] % Defines the visible area of the page with 10-point margin.
 /Rotate 0 % No rotation is applied.
 /Contents 5 0 R % Points to the text content (object 5).
 >>
@@ -40,7 +40,7 @@ endobj
 stream % The stream contains the actual text displayed on the page.
 BT % Begin a new text block.
 /F1 24 Tf % Set font "/F1" (Helvetica) with size 24.
-/100 700 Td % Move the text cursor to position (100, 700).
+100 750 Td % Move the text cursor to position (100, 750).
 (Relatório Financeiro: Primeiro Trimestre) Tj % Print the title "Relatório Financeiro: Primeiro Trimestre".
 /F1 12 Tf % Change font size to 12.
 0 -50 Td % Move text cursor down by 50 points.
@@ -64,8 +64,8 @@ endobj
 7 0 obj
 << /Type /Outlines % Defines the document bookmarks (table of contents).
 /Count 3 % Number of bookmarks.
-/First 11 0 R % First bookmark (object 11).
-/Last 13 0 R % Last bookmark (object 13).
+/First 10 0 R % First bookmark (object 10).
+/Last 12 0 R % Last bookmark (object 12).
 >>
 endobj
 
@@ -85,50 +85,31 @@ endobj
 
 10 0 obj
 << /Title (Resumo Executivo) % Bookmark title "Resumo Executivo".
-/Parent 8 0 R % Parent bookmark object.
-/Next 12 0 R % Next bookmark (object 12).
-/Dest [3 0 R /FitH 792.0] % Destination: fit page height.
+/Parent 7 0 R % Parent bookmark object.
+/Next 11 0 R % Next bookmark (object 11).
+/Dest [3 0 R /FitH 842] % Destination: fit page height.
 >>
 endobj
 
 11 0 obj
 << /Title (Detalhamento de Vendas) % Bookmark title "Detalhamento de Vendas".
-/Parent 8 0 R % Parent bookmark object.
-/Prev 11 0 R % Previous bookmark.
-/Next 13 0 R % Next bookmark (object 13).
-/Dest [4 0 R /FitH 792.0] % Destination: fit page height.
+/Parent 7 0 R % Parent bookmark object.
+/Prev 10 0 R % Previous bookmark.
+/Next 12 0 R % Next bookmark (object 12).
+/Dest [3 0 R /FitH 842] % Destination: fit page height.
 >>
 endobj
 
 12 0 obj
 << /Title (Projeções Futuras) % Bookmark title "Projeções Futuras".
-/Parent 8 0 R % Parent bookmark object.
-/Prev 12 0 R % Previous bookmark.
-/Dest [4 0 R /XYZ 100 450 1.25] % Destination: zoom at coordinates (100, 450) with scale 1.25.
+/Parent 7 0 R % Parent bookmark object.
+/Prev 11 0 R % Previous bookmark.
+/Dest [3 0 R /XYZ 100 450 1.25] % Destination: zoom at coordinates (100, 450) with scale 1.25.
 >>
-endobj
-
-13 0 obj
-<< /Type /Metadata % Metadata object.
-/Subtype /XML % Specifies XML metadata format.
-/Length 340 % Metadata length.
->>
-stream
-<?xpacket begin='' id='W5M0MpCehiHzreSzNTczkc9d'?>
-<x:xmpmeta xmlns:x='adobe:ns:meta/'>
-<rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
-<rdf:Description rdf:about='' 
-xmlns:pdf='http://ns.adobe.com/pdf/1.0/'>
-<pdf:Producer>SimplePDF Generator 1.0</pdf:Producer>
-</rdf:Description>
-</rdf:RDF>
-</x:xmpmeta>
-<?xpacket end='w'?>
-endstream
 endobj
 
 xref % Cross-reference table.
-0 15
+0 13
 0000000000 65535 f
 0000000010 00000 n
 0000000099 00000 n
@@ -139,19 +120,17 @@ xref % Cross-reference table.
 0000000852 00000 n
 0000001048 00000 n
 0000001126 00000 n
+0000001300 00000 n
+0000001400 00000 n
 0000001500 00000 n
-0000001712 00000 n
-0000001818 00000 n
-0000001940 00000 n
-0000002052 00000 n
 
 trailer % Trailer dictionary (summary information about the document).
-<< /Size 15
+<< /Size 13
 /Root 1 0 R
-/Info 7 0 R
+/Info 6 0 R
 >>
 
 startxref % Position of the xref table.
-2500
+1700
 
 %%EOF
