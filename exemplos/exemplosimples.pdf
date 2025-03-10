@@ -2,230 +2,123 @@
 % This is the file header, indicating the PDF format (SimplePDF 1.0).
 
 1 0 obj
-<< /Type /Catalog
-% Defines the root object (the document catalog).
-/Pages 2 0 R
-% Points to the "Pages" object (object 2), "R" means Reference.
-/Metadata 6 0 R
-% Points to metadata information (object 6).
-/Outlines 7 0 R
-% Points to the table of contents or bookmarks (object 7).
+<< /Type /Catalog % Defines the root object (the document catalog).
+/Pages 2 0 R % Points to the "Pages" object (object 2), "R" means Reference.
+/Metadata 6 0 R % Points to metadata information (object 6).
+/Outlines 7 0 R % Points to the table of contents or bookmarks (object 7).
 >>
 endobj
 
 2 0 obj
-<< /Type /Pages
-% Defines this object as a "Pages" node.
-/Kids [3 0 R]
-% Lists child pages (in this case, a single page: object 3).
-/Count 1
-% Specifies that there is 1 page in the document.
+<< /Type /Pages % Defines this object as a "Pages" node.
+/Kids [3 0 R] % Lists child pages (in this case, a single page: object 3).
+/Count 1 % Specifies that there is 1 page in the document.
 >>
 endobj
 
 3 0 obj
-<< /Type /Page
-% Defines this object as a "Page".
-/Parent 2 0 R
-% Links this page to the parent "Pages" node (object 2).
-/Resources << /Font << /F1 4 0 R >> >>
-% Defines font resources (object 4 is used for font settings).
-/MediaBox [0 0 595.0 842.0]
-% Defines the page size in points (A4).
-/CropBox [10 10 585 832]
-% Defines the visible area of the page with 10-point margin
-/Rotate 0
-% No rotation is applied.
-/Contents 5 0 R
-% Points to the text content (object 5).
+<< /Type /Page % Defines this object as a "Page".
+/Parent 2 0 R % Links this page to the parent "Pages" node (object 2).
+/Resources << /Font << /F1 4 0 R >> >> % Defines font resources (object 4 is used for font settings).
+/MediaBox [0 0 595.0 842.0] % Defines the page size in points (A4).
+/CropBox [10 10 585 832] % Defines the visible area of the page with 10-point margin
+/Rotate 0 % No rotation is applied.
+/Contents 5 0 R % Points to the text content (object 5).
 >>
 endobj
 
 4 0 obj
-<< /Type /Font
-% Defines a font object.
-/Subtype /Type1
-% Specifies the font type (Type1 font).
-/BaseFont /Helvetica
-% Uses the Helvetica font.
-/FontDescriptor 9 0 R
-% References additional font details in object 9.
+<< /Type /Font % Defines a font object.
+/Subtype /Type1 % Specifies the font type (Type1 font).
+/BaseFont /Helvetica % Uses the Helvetica font.
+/FontDescriptor 9 0 R % References additional font details in object 9.
 >>
 endobj
 
 5 0 obj
 << /Length 175 >>
-stream
-% The stream contains the actual text displayed on the page.
-BT
-% Begin a new text block.
-/F1 24 Tf
-% Set font "/F1" (Helvetica) with size 24.
-/100 700 Td
-% Move the text cursor to position (100, 700).
-(Relatório Financeiro: Primeiro Trimestre) Tj
-% Print the title "Relatório Financeiro: Primeiro Trimestre".
-/F1 12 Tf
-% Change font size to 12.
-0 -50 Td
-% Move text cursor down by 50 points.
-(Total de vendas: 1423 unidades) Tj
-% Print "Total de vendas: 1423 unidades".
-0 -20 Td
-% Move text cursor down by 20 points.
-(Receita total: 158432.75 reais) Tj
-% Print "Receita total: 158432.75 reais".
-ET
-% End the text block.
+stream % The stream contains the actual text displayed on the page.
+BT % Begin a new text block.
+/F1 24 Tf % Set font "/F1" (Helvetica) with size 24.
+/100 700 Td % Move the text cursor to position (100, 700).
+(Relatório Financeiro: Primeiro Trimestre) Tj % Print the title "Relatório Financeiro: Primeiro Trimestre".
+/F1 12 Tf % Change font size to 12.
+0 -50 Td % Move text cursor down by 50 points.
+(Total de vendas: 1423 unidades) Tj % Print "Total de vendas: 1423 unidades".
+0 -20 Td % Move text cursor down by 20 points.
+(Receita total: 158432.75 reais) Tj % Print "Receita total: 158432.75 reais".
+ET % End the text block.
 endstream
 endobj
-% End of text content object.
 
 6 0 obj
-<< /Title (Relatório Financeiro Trimestral)
-   % Defines the document title.
-/Author (Departamento Financeiro)
-   % Specifies the document author.
-/CreationDate (D:20230418090000)
-   % Creation date (April 18, 2023, at 09:00 AM).
-/Keywords (finanças, relatório, trimestral)
-   % Metadata keywords for searchability.
-/Version 1.2
-   % PDF version.
-/PageCount 2
-   % The document has 2 pages.
+<< /Title (Relatório Financeiro Trimestral) % Defines the document title.
+/Author (Departamento Financeiro) % Specifies the document author.
+/CreationDate (D:20240418100000) % Creation date (April 18, 2024, at 10:00 AM) My Birthday.
+/Keywords (finanças, relatório, trimestral) % Metadata keywords for searchability.
+/Version 1.0 % PDF version.
+/PageCount 1 % The document has 1 page.
 >>
 endobj
-% End of metadata object.
 
 7 0 obj
-<< /Type /Outlines
-   % Defines the document bookmarks (table of contents).
-/Count 3
-   % Number of bookmarks.
-/First 11 0 R
-   % First bookmark (object 11).
-/Last 13 0 R
-   % Last bookmark (object 13).
+<< /Type /Outlines % Defines the document bookmarks (table of contents).
+/Count 3 % Number of bookmarks.
+/First 11 0 R % First bookmark (object 11).
+/Last 13 0 R % Last bookmark (object 13).
 >>
 endobj
-% End of outlines (bookmarks).
-
-8 0 obj
-<< /Length 322 >>
-stream
-   % Another text content stream for a different page.
-BT
-/F1 18 Tf
-   % Set font "/F1" with size 18.
-100 700 Td
-   % Move the text cursor to position (100, 700).
-(Detalhamento por Categoria) Tj
-   % Print "Detalhamento por Categoria".
-/F1 12 Tf
-   % Change font size to 12.
-0 -40 Td
-   % Move text cursor down by 40 points.
-(Produto A: 523 unidades, valor unitário 89.99, total 47054.77) Tj
-   % Print product A sales details.
-0 -20 Td
-   % Move text cursor down by 20 points.
-(Produto B: 347 unidades, valor unitário 125.50, total 43548.50) Tj
-   % Print product B sales details.
-0 -20 Td
-   % Move text cursor down by 20 points.
-(Produto C: 553 unidades, valor unitário 122.65, total 67825.45) Tj
-   % Print product C sales details.
-0 -40 Td
-   % Move text cursor down by 40 points.
-(Média de vendas por produto: 474.33 unidades) Tj
-   % Print the average sales per product.
-ET
-   % End the text block.
-endstream
-endobj
-% End of second text content object.
 
 9 0 obj
-<< /Type /FontDescriptor
-   % Font descriptor object.
-/FontName /Helvetica
-   % Specifies the font name.
-/Flags 32
-   % Font attribute flags.
-/FontBBox [-166 -225 1000 931]
-   % Font bounding box dimensions.
-/ItalicAngle 0
-   % No italics.
-/Ascent 718
-   % Ascent height.
-/Descent -207
-   % Descent height.
-/CapHeight 718
-   % Capital letter height.
-/StemV 88
-   % Vertical stem thickness.
-/MissingWidth 278
-   % Default missing character width.
+<< /Type /FontDescriptor % Font descriptor object.
+/FontName /Helvetica % Specifies the font name.
+/Flags 32 % Font attribute flags.
+/FontBBox [-166 -225 1000 931] % Font bounding box dimensions.
+/ItalicAngle 0 % No italics.
+/Ascent 718 % Ascent height.
+/Descent -207 % Descent height.
+/CapHeight 718 % Capital letter height.
+/StemV 88 % Vertical stem thickness.
+/MissingWidth 278 % Default missing character width.
 >>
 endobj
-% End of font descriptor object.
 
 10 0 obj
-<< /Title (Resumo Executivo)
-   % Bookmark title "Resumo Executivo".
-/Parent 8 0 R
-   % Parent bookmark object.
-/Next 12 0 R
-   % Next bookmark (object 12).
-/Dest [3 0 R /FitH 792.0]
-   % Destination: fit page height.
+<< /Title (Resumo Executivo) % Bookmark title "Resumo Executivo".
+/Parent 8 0 R % Parent bookmark object.
+/Next 12 0 R % Next bookmark (object 12).
+/Dest [3 0 R /FitH 792.0] % Destination: fit page height.
 >>
 endobj
-% End of bookmark.
 
 11 0 obj
-<< /Title (Detalhamento de Vendas)
-   % Bookmark title "Detalhamento de Vendas".
-/Parent 8 0 R
-   % Parent bookmark object.
-/Prev 11 0 R
-   % Previous bookmark.
-/Next 13 0 R
-   % Next bookmark (object 13).
-/Dest [4 0 R /FitH 792.0]
-   % Destination: fit page height.
+<< /Title (Detalhamento de Vendas) % Bookmark title "Detalhamento de Vendas".
+/Parent 8 0 R % Parent bookmark object.
+/Prev 11 0 R % Previous bookmark.
+/Next 13 0 R % Next bookmark (object 13).
+/Dest [4 0 R /FitH 792.0] % Destination: fit page height.
 >>
 endobj
-% End of bookmark.
 
 12 0 obj
-<< /Title (Projeções Futuras)
-   % Bookmark title "Projeções Futuras".
-/Parent 8 0 R
-   % Parent bookmark object.
-/Prev 12 0 R
-   % Previous bookmark.
-/Dest [4 0 R /XYZ 100 450 1.25]
-   % Destination: zoom at coordinates (100, 450) with scale 1.25.
+<< /Title (Projeções Futuras) % Bookmark title "Projeções Futuras".
+/Parent 8 0 R % Parent bookmark object.
+/Prev 12 0 R % Previous bookmark.
+/Dest [4 0 R /XYZ 100 450 1.25] % Destination: zoom at coordinates (100, 450) with scale 1.25.
 >>
 endobj
-% End of bookmark.
 
 13 0 obj
-<< /Type /Metadata
-   % Metadata object.
-/Subtype /XML
-   % Specifies XML metadata format.
-/Length 340
-   % Metadata length.
+<< /Type /Metadata % Metadata object.
+/Subtype /XML % Specifies XML metadata format.
+/Length 340 % Metadata length.
 >>
 stream
 <?xpacket begin='' id='W5M0MpCehiHzreSzNTczkc9d'?>
 <x:xmpmeta xmlns:x='adobe:ns:meta/'>
 <rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
 <rdf:Description rdf:about='' 
-xmlns:pdf='http://ns.adobe.com/pdf/1.3/'>
+xmlns:pdf='http://ns.adobe.com/pdf/1.0/'>
 <pdf:Producer>SimplePDF Generator 1.0</pdf:Producer>
 </rdf:Description>
 </rdf:RDF>
@@ -233,16 +126,32 @@ xmlns:pdf='http://ns.adobe.com/pdf/1.3/'>
 <?xpacket end='w'?>
 endstream
 endobj
-% End of metadata.
 
-xref
-% Cross-reference table.
+xref % Cross-reference table.
+0 15
+0000000000 65535 f
+0000000010 00000 n
+0000000099 00000 n
+0000000163 00000 n
+0000000344 00000 n
+0000000525 00000 n
+0000000624 00000 n
+0000000852 00000 n
+0000001048 00000 n
+0000001126 00000 n
+0000001500 00000 n
+0000001712 00000 n
+0000001818 00000 n
+0000001940 00000 n
+0000002052 00000 n
 
-trailer
-% Trailer dictionary (summary information about the document).
+trailer % Trailer dictionary (summary information about the document).
+<< /Size 15
+/Root 1 0 R
+/Info 7 0 R
+>>
 
-startxref
-% Position of the xref table.
+startxref % Position of the xref table.
+2500
 
 %%EOF
-% End of the file.
