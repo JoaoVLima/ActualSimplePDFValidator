@@ -41,21 +41,21 @@ stream % The stream contains the actual text displayed on the page.
 BT % Begin a new text block.
 /F1 24 Tf % Set font "/F1" (Helvetica) with size 24.
 100 750 Td % Move the text cursor to position (100, 750).
-(Relatório Financeiro: Primeiro Trimestre) Tj % Print the title "Relatório Financeiro: Primeiro Trimestre".
+(Pagina de Teste) Tj % Print the title.
 /F1 12 Tf % Change font size to 12.
 0 -50 Td % Move text cursor down by 50 points.
-(Total de vendas: 1423 unidades) Tj % Print "Total de vendas: 1423 unidades".
+(Feito com SimplePDF) Tj % Print.
 0 -20 Td % Move text cursor down by 20 points.
-(Receita total: 158432.75 reais) Tj % Print "Receita total: 158432.75 reais".
+(Feito por Joao Lima) Tj % Print.
 ET % End the text block.
 endstream
 endobj
 
 6 0 obj
-<< /Title (Relatório Financeiro Trimestral) % Defines the document title.
-/Author (Departamento Financeiro) % Specifies the document author.
+<< /Title (Pagina de Teste) % Defines the document title.
+/Author (Joao Lima) % Specifies the document author.
 /CreationDate (D:20240418100000) % Creation date (April 18, 2024, at 10:00 AM) My Birthday.
-/Keywords (finanças, relatório, trimestral) % Metadata keywords for searchability.
+/Keywords (teste) % Metadata keywords for searchability.
 /Version 1.0 % PDF version.
 /PageCount 1 % The document has 1 page.
 >>
