@@ -1,136 +1,135 @@
 %SPDF-1.0
-% This is the file header, indicating the PDF format (SimplePDF 1.0).
 
 1 0 obj
-<< /Type /Catalog % Defines the root object (the document catalog).
-/Pages 2 0 R % Points to the "Pages" object (object 2), "R" means Reference.
-/Metadata 6 0 R % Points to metadata information (object 6).
-/Outlines 7 0 R % Points to the table of contents or bookmarks (object 7).
+<< /Type /Catalog
+/Pages 2 0 R
+/Metadata 6 0 R
+/Outlines 7 0 R
 >>
 endobj
 
 2 0 obj
-<< /Type /Pages % Defines this object as a "Pages" node.
-/Kids [3 0 R] % Lists child pages (in this case, a single page: object 3).
-/Count 1 % Specifies that there is 1 page in the document.
+<< /Type /Pages
+/Kids [3 0 R]
+/Count 1
 >>
 endobj
 
 3 0 obj
-<< /Type /Page % Defines this object as a "Page".
-/Parent 2 0 R % Links this page to the parent "Pages" node (object 2).
-/Resources << /Font << /F1 4 0 R >> >> % Defines font resources (object 4 is used for font settings).
-/MediaBox [0 0 595 842] % Defines the page size in points (A4).
-/CropBox [10 10 585 832] % Defines the visible area of the page with 10-point margin.
-/Rotate 0 % No rotation is applied.
-/Contents 5 0 R % Points to the text content (object 5).
+<< /Type /Page
+/Parent 2 0 R
+/Resources << /Font << /F1 4 0 R >> >>
+/MediaBox [0 0 595 842]
+/CropBox [10 10 585 832]
+/Rotate 0
+/Contents 5 0 R
 >>
 endobj
 
 4 0 obj
-<< /Type /Font % Defines a font object.
-/Subtype /Type1 % Specifies the font type (Type1 font).
-/BaseFont /Helvetica % Uses the Helvetica font.
-/FontDescriptor 9 0 R % References additional font details in object 9.
+<< /Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+/FontDescriptor 9 0 R
 >>
 endobj
 
 5 0 obj
 << /Length 175 >>
-stream % The stream contains the actual text displayed on the page.
-BT % Begin a new text block.
-/F1 24 Tf % Set font "/F1" (Helvetica) with size 24.
-100 750 Td % Move the text cursor to position (100, 750).
-(Pagina de Teste) Tj % Print the title.
-/F1 12 Tf % Change font size to 12.
-0 -50 Td % Move text cursor down by 50 points.
-(Feito com SimplePDF) Tj % Print.
-0 -20 Td % Move text cursor down by 20 points.
-(Feito por Joao Lima) Tj % Print.
-ET % End the text block.
+stream
+BT
+/F1 24 Tf
+100 750 Td
+(Pagina de Teste) Tj
+/F1 12 Tf
+0 -50 Td
+(Feito com SimplePDF) Tj
+0 -20 Td
+(Feito por Joao Lima) Tj
+ET
 endstream
 endobj
 
 6 0 obj
-<< /Title (Pagina de Teste) % Defines the document title.
-/Author (Joao Lima) % Specifies the document author.
-/CreationDate (D:20240418100000) % Creation date (April 18, 2024, at 10:00 AM) My Birthday.
-/Keywords (teste) % Metadata keywords for searchability.
-/Version 1.0 % PDF version.
-/PageCount 1 % The document has 1 page.
+<< /Title (Pagina de Teste)
+/Author (Joao Lima)
+/CreationDate (D:20240418100000)
+/Keywords (teste)
+/Version 1.0
+/PageCount 1
 >>
 endobj
 
 7 0 obj
-<< /Type /Outlines % Defines the document bookmarks (table of contents).
-/Count 3 % Number of bookmarks.
-/First 10 0 R % First bookmark (object 10).
-/Last 12 0 R % Last bookmark (object 12).
+<< /Type /Outlines
+/Count 3
+/First 10 0 R
+/Last 12 0 R
 >>
 endobj
 
 9 0 obj
-<< /Type /FontDescriptor % Font descriptor object.
-/FontName /Helvetica % Specifies the font name.
-/Flags 32 % Font attribute flags.
-/FontBBox [-166 -225 1000 931] % Font bounding box dimensions.
-/ItalicAngle 0 % No italics.
-/Ascent 718 % Ascent height.
-/Descent -207 % Descent height.
-/CapHeight 718 % Capital letter height.
-/StemV 88 % Vertical stem thickness.
-/MissingWidth 278 % Default missing character width.
+<< /Type /FontDescriptor
+/FontName /Helvetica
+/Flags 32
+/FontBBox [-166 -225 1000 931]
+/ItalicAngle 0
+/Ascent 718
+/Descent -207
+/CapHeight 718
+/StemV 88
+/MissingWidth 278
 >>
 endobj
 
 10 0 obj
-<< /Title (Resumo Executivo) % Bookmark title "Resumo Executivo".
-/Parent 7 0 R % Parent bookmark object.
-/Next 11 0 R % Next bookmark (object 11).
-/Dest [3 0 R /FitH 842] % Destination: fit page height.
+<< /Title (Pagina de Teste)
+/Parent 7 0 R
+/Next 11 0 R
+/Dest [3 0 R /FitH 842]
 >>
 endobj
 
 11 0 obj
-<< /Title (Detalhamento de Vendas) % Bookmark title "Detalhamento de Vendas".
-/Parent 7 0 R % Parent bookmark object.
-/Prev 10 0 R % Previous bookmark.
-/Next 12 0 R % Next bookmark (object 12).
-/Dest [3 0 R /FitH 842] % Destination: fit page height.
+<< /Title (bookmark2)
+/Parent 7 0 R
+/Prev 10 0 R
+/Next 12 0 R
+/Dest [3 0 R /FitH 842]
 >>
 endobj
 
 12 0 obj
-<< /Title (Projeções Futuras) % Bookmark title "Projeções Futuras".
-/Parent 7 0 R % Parent bookmark object.
-/Prev 11 0 R % Previous bookmark.
-/Dest [3 0 R /XYZ 100 450 1.25] % Destination: zoom at coordinates (100, 450) with scale 1.25.
+<< /Title (bookmark3)
+/Parent 7 0 R
+/Prev 11 0 R
+/Dest [3 0 R /XYZ 100 450 1.25]
 >>
 endobj
 
-xref % Cross-reference table.
+xref
 0 13
 0000000000 65535 f
 0000000010 00000 n
-0000000099 00000 n
-0000000163 00000 n
-0000000344 00000 n
-0000000525 00000 n
-0000000624 00000 n
-0000000852 00000 n
-0000001048 00000 n
-0000001126 00000 n
-0000001300 00000 n
-0000001400 00000 n
-0000001500 00000 n
+0000000074 00000 n
+0000000133 00000 n
+0000000286 00000 n
+0000000406 00000 n
+0000000502 00000 n
+0000000696 00000 n
+0000000844 00000 n
+0000000922 00000 n
+0000001096 00000 n
+0000001196 00000 n
+0000001296 00000 n
 
-trailer % Trailer dictionary (summary information about the document).
+trailer
 << /Size 13
 /Root 1 0 R
 /Info 6 0 R
 >>
 
-startxref % Position of the xref table.
-1700
+startxref
+1400
 
 %%EOF
