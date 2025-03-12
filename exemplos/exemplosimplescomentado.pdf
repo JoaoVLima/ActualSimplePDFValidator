@@ -2,7 +2,8 @@
 % This is the file header, indicating the PDF format (SimplePDF 1.0).
 
 1 0 obj
-<< /Type /Catalog % Defines the root object (the document catalog).
+<< 
+/Type /Catalog % Defines the root object (the document catalog).
 /Pages 2 0 R % Points to the "Pages" object (object 2), "R" means Reference.
 /Metadata 6 0 R % Points to metadata information (object 6).
 /Outlines 7 0 R % Points to the table of contents or bookmarks (object 7).
@@ -10,14 +11,16 @@
 endobj
 
 2 0 obj
-<< /Type /Pages % Defines this object as a "Pages" node.
+<< 
+/Type /Pages % Defines this object as a "Pages" node.
 /Kids [3 0 R] % Lists child pages (in this case, a single page: object 3).
 /Count 1 % Specifies that there is 1 page in the document.
 >>
 endobj
 
 3 0 obj
-<< /Type /Page % Defines this object as a "Page".
+<< 
+/Type /Page % Defines this object as a "Page".
 /Parent 2 0 R % Links this page to the parent "Pages" node (object 2).
 /Resources << /Font << /F1 4 0 R >> >> % Defines font resources (object 4 is used for font settings).
 /MediaBox [0 0 595 842] % Defines the page size in points (A4).
@@ -28,7 +31,8 @@ endobj
 endobj
 
 4 0 obj
-<< /Type /Font % Defines a font object.
+<< 
+/Type /Font % Defines a font object.
 /Subtype /Type1 % Specifies the font type (Type1 font).
 /BaseFont /Helvetica % Uses the Helvetica font.
 /FontDescriptor 9 0 R % References additional font details in object 9.
@@ -36,7 +40,9 @@ endobj
 endobj
 
 5 0 obj
-<< /Length 175 >>
+<< 
+/Length 175 
+>>
 stream % The stream contains the actual text displayed on the page.
 BT % Begin a new text block.
 /F1 24 Tf % Set font "/F1" (Helvetica) with size 24.
@@ -52,7 +58,8 @@ endstream
 endobj
 
 6 0 obj
-<< /Title (Pagina de Teste) % Defines the document title.
+<< 
+/Title (Pagina de Teste) % Defines the document title.
 /Author (Joao Lima) % Specifies the document author.
 /CreationDate (D:20240418100000) % Creation date (April 18, 2024, at 10:00 AM) My Birthday.
 /Keywords (teste) % Metadata keywords for searchability.
@@ -62,7 +69,8 @@ endobj
 endobj
 
 7 0 obj
-<< /Type /Outlines % Defines the document bookmarks (table of contents).
+<< 
+/Type /Outlines % Defines the document bookmarks (table of contents).
 /Count 3 % Number of bookmarks.
 /First 10 0 R % First bookmark (object 10).
 /Last 12 0 R % Last bookmark (object 12).
@@ -70,7 +78,8 @@ endobj
 endobj
 
 9 0 obj
-<< /Type /FontDescriptor % Font descriptor object.
+<< 
+/Type /FontDescriptor % Font descriptor object.
 /FontName /Helvetica % Specifies the font name.
 /Flags 32 % Font attribute flags.
 /FontBBox [-166 -225 1000 931] % Font bounding box dimensions.
@@ -84,7 +93,8 @@ endobj
 endobj
 
 10 0 obj
-<< /Title (Pagina de Teste) % Bookmark title.
+<< 
+/Title (Pagina de Teste) % Bookmark title.
 /Parent 7 0 R % Parent bookmark object.
 /Next 11 0 R % Next bookmark (object 11).
 /Dest [3 0 R /FitH 842] % Destination: fit page height.
@@ -92,7 +102,8 @@ endobj
 endobj
 
 11 0 obj
-<< /Title (bookmark2) % Bookmark title.
+<< 
+/Title (bookmark2) % Bookmark title.
 /Parent 7 0 R % Parent bookmark object.
 /Prev 10 0 R % Previous bookmark.
 /Next 12 0 R % Next bookmark (object 12).
@@ -101,7 +112,8 @@ endobj
 endobj
 
 12 0 obj
-<< /Title (bookmark3) % Bookmark title.
+<< 
+/Title (bookmark3) % Bookmark title.
 /Parent 7 0 R % Parent bookmark object.
 /Prev 11 0 R % Previous bookmark.
 /Dest [3 0 R /XYZ 100 450 1.25] % Destination: zoom at coordinates (100, 450) with scale 1.25.
@@ -125,7 +137,8 @@ xref % Cross-reference table.
 0000001500 00000 n
 
 trailer % Trailer dictionary (summary information about the document).
-<< /Size 13
+<< 
+/Size 13
 /Root 1 0 R
 /Info 6 0 R
 >>
