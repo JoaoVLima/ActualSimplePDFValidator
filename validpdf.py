@@ -31,6 +31,8 @@ ANÁLISE AVANÇADA:
 [Resultados de análises específicas definidas no arquivo de configuração]
 """
 
+from Tree import Tree
+
 extrair_texto = None
 gerar_sumario = None
 detectar_ciclos = None
@@ -68,6 +70,7 @@ class PDFValidador:
         self.starttrailer = self.get_starttrailer()
 
         self.xref = self.file[self.startxref:self.starttrailer]
+        print(self.xref)
 
         # Trailler is  'trailer << <trailer key–value pair>+ >> startxref <cross-reference table start address> %%EOF'
         # but i am only considering 'trailer << <trailer key–value pair>+ >> '
@@ -91,6 +94,11 @@ class PDFValidador:
         self.remove_comments()
 
         print(self.check_references())
+
+        self.get_dictionaries()
+
+        self.tree = self.get_tree(self.objects, self.get_reference_id(self.trailer_root)[0])
+        print(self.tree)
 
     def read_pdf(self):
         with open(self.file_path, "r", encoding="utf-8") as file:
@@ -300,6 +308,8 @@ class PDFValidador:
             token = tokens[i]
             if token == 'R':
                 ref_id = tokens[i - 2]
+                if not ref_id.isdigit():
+                    continue
                 ref_id = int(ref_id)
                 ids.append(ref_id)
 
@@ -317,125 +327,43 @@ class PDFValidador:
 
         return True
 
+    def get_dictionaries(self):
+        for obj in self.objects.values():
+            obj['dictionary'] = self.string_to_dict(obj['content'])
+
+    def references_recursive(self, object):
+        references = []
+        if 'dictionary' in object:
+            object = object['dictionary']
+        for key, value in object.items():
+            if key == '/Parent':
+                continue
+            if isinstance(value, dict):
+                references += self.references_recursive(value)
+                continue
+            references += self.get_reference_id(value)
+
+        return references
+
+    def get_tree(self, objects, root):
+        root_object = objects[root]
+        root = f"{root}: {root_object['dictionary'].get('/Type', 'obj')}"
+        tree = Tree(root)
+
+        references = self.references_recursive(root_object)
+
+        for ref_id in references:
+            node = self.get_tree(objects, ref_id).root
+            tree.add_child(root, node)
+
+        return tree
 
 
+pdf3 = PDFValidador('exemplos/exemplo3.pdf')
+pdf4 = PDFValidador('exemplos/exemplo4.pdf')
+pdf5 = PDFValidador('exemplos/exemplo5.pdf')
 
-def get_dictionaries(objects):
-    for obj in objects.values():
-        obj['dictionary'] = string_to_dict(obj['content'])
-
-
-get_dictionaries(OBJECTS)
-
-
-class Node:
-    def __init__(self, info=''):
-        self.info = info
-        self.children = []
-
-    def __str__(self):
-        return self.info
-
-    def add_child(self, child):
-        self.children.append(child)
-        return True
-
-    def height(self):
-        if not self.children:
-            return 1
-        return 1 + max([child.height() for child in self.children])
-
-    def find_node(self, target):
-        if self.info == target:
-            return self
-
-        for child in self.children:
-            if child.info == target:
-                return child
-            found = child.find_node(target)
-            if found:
-                return found
-
-    def print(self, level=0):
-        result = "\t" * level + str(self) + "\n"
-        for child in self.children:
-            result += child.print(level + 1)
-        return result
-
-
-class Tree:
-    def __init__(self, root=None):
-        if root and not isinstance(root, Node):
-            root = Node(root)
-        self.root = root
-
-    def __str__(self):
-        return self.print()
-
-    def is_empty(self):
-        return self.root is None
-
-    def height(self):
-        return self.root.height()
-
-    def find_node(self, target):
-        if self.is_empty():
-            return None
-        return self.root.find_node(target)
-
-    def add_child(self, target, node):
-        if self.is_empty():
-            return None
-
-        if not isinstance(target, Node):
-            target = self.find_node(target)
-
-        if not isinstance(node, Node):
-            node = Node(node)
-
-        return target.add_child(node)
-
-    def print(self):
-        if self.is_empty():
-            return ''
-        return self.root.print()
-
-
-def references_recursive(object):
-    references = []
-    if 'dictionary' in object:
-        object = object['dictionary']
-    for key, value in object.items():
-        if key == '/Parent':
-            continue
-        if isinstance(value, dict):
-            references += references_recursive(value)
-            continue
-        references += get_reference_id(value)
-
-    return references
-
-
-def get_tree(objects, root):
-    root_object = objects[root]
-    root = f"{root}: {root_object['dictionary'].get('/Type', 'obj')}"
-    tree = Tree(root)
-
-    references = references_recursive(root_object)
-
-    for ref_id in references:
-        node = get_tree(objects, ref_id).root
-        tree.add_child(root, node)
-
-    return tree
-
-
-tree = get_tree(OBJECTS, get_reference_id(TRAILER_ROOT)[0])
-
-print(tree)
-
-
-
+pdf5
 
 
 
