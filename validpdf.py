@@ -46,316 +46,278 @@ print(nivel_detalhe)
 print(validar_xref)
 
 
-def read_pdf(file_path):
-    with open(file_path, "r", encoding="utf-8") as file:
-        text = file.read()
-    return text
+class PDFValidador:
+    def __init__(self, file_path):
+        self.file_path = file_path
+        self.file = self.read_pdf()
+        self.filesize = len(self.file)
 
+        print(self.check_header())
 
-FILE = read_pdf('exemplos/exemplo3.pdf')
+        self.startbody = self.get_startbody()  # startbody=10 for spdf header
 
-FILE_SIZE = len(FILE)
+        print(self.check_eof())
 
+        self.startxref = self.get_startxref()
 
-def check_header(file):
-    return file.startswith('%SPDF-') or file.startswith('%PDF-')
+        self.body = self.file[self.startbody:self.startxref]
+        self.bodysize = len(self.body)
 
+        self.startxref_keyword_offset = self.filesize - 6 - len(str(self.startxref)) - 10  # f'startxref\n{xref_address}\n%%EOF'
 
-print(check_header(FILE))
+        self.starttrailer = self.get_starttrailer()
 
+        self.xref = self.file[self.startxref:self.starttrailer]
 
-def get_startbody(file):
-    for i in range(256):
-        if file[i] == '\n':  # get the second line
-            return i + 1
+        # Trailler is  'trailer << <trailer key–value pair>+ >> startxref <cross-reference table start address> %%EOF'
+        # but i am only considering 'trailer << <trailer key–value pair>+ >> '
+        self.trailer = self.file[self.starttrailer:self.startxref_keyword_offset]
 
+        self.trailer_dict = self.string_to_dict(self.trailer)
+        print(self.check_trailer(self.trailer_dict))
 
-STARTBODY = get_startbody(FILE)
+        self.trailer_size = int(self.trailer_dict['/Size'])
+        self.trailer_root = self.trailer_dict['/Root']
 
+        self.xref_list = self.xref_to_list()
+        print(self.check_xref_size())
 
-def check_eof(file):
-    return file.endswith('%%EOF')
+        self.xref_addresses = self.get_xref_addresses()
+        print(self.check_xref_addresses())
 
+        self.objects = {1: {}}
+        self.update_xref_addresses()
+        self.update_contents()
+        self.remove_comments()
 
-print(check_eof(FILE))
+        print(self.check_references())
 
+    def read_pdf(self):
+        with open(self.file_path, "r", encoding="utf-8") as file:
+            text = file.read()
+        return text
 
-def get_startxref(file, filesize):
-    end = filesize - 6  # ignoring this '\n%%EOF'
-    for i in range(end - 1, 0, -1):
-        if file[i] == '\n':  # get only one line
-            return int(file[i + 1:end])
+    def check_header(self):
+        return self.file.startswith('%SPDF-') or self.file.startswith('%PDF-')
 
+    def get_startbody(self):
+        for i in range(256):
+            if self.file[i] == '\n':  # get the second line
+                return i + 1
 
-STARTXREF = get_startxref(FILE, FILE_SIZE)
+    def check_eof(self):
+        return self.file.endswith('%%EOF')
 
-BODY = FILE[STARTBODY:STARTXREF]
+    def get_startxref(self):
+        end = self.filesize - 6  # ignoring this '\n%%EOF'
+        for i in range(end - 1, 0, -1):
+            if self.file[i] == '\n':  # get only one line
+                return int(self.file[i + 1:end])
 
-BODY_SIZE = len(BODY)
+    def get_starttrailer(self):
+        end = self.startxref_keyword_offset  # ignoring this f'startxref\n{xref_address}\n%%EOF'
+        for i in range(self.startxref, end):
+            if self.file[i] == 't':  # trailler
+                return i
 
-STARTXREF_KEYWORD_OFFSET = FILE_SIZE - 6 - len(str(STARTXREF)) - 10  # f'startxref\n{xref_address}\n%%EOF'
-
-
-def get_starttrailer(file, startxref, startxref_keyword_offset):
-    end = startxref_keyword_offset  # ignoring this f'startxref\n{xref_address}\n%%EOF'
-    for i in range(startxref, end):
-        if file[i] == 't':  # trailler
-            return i
-
-
-STARTTRAILER = get_starttrailer(FILE, STARTXREF, STARTXREF_KEYWORD_OFFSET)
-
-XREF = FILE[STARTXREF:STARTTRAILER]
-
-# Trailler is  'trailer << <trailer key–value pair>+ >> startxref <cross-reference table start address> %%EOF'
-# but i am only considering 'trailer << <trailer key–value pair>+ >> '
-TRAILER = FILE[STARTTRAILER:STARTXREF_KEYWORD_OFFSET]
-
-
-def string_to_dict(dict_str):
-    tokens = dict_str.split()
-    return tokens_to_dict(tokens)
-
-
-def tokens_to_dict(tokens, index=-1, index_return=False):
-    data = {}
-    key = None
-    value = []
-    i = index
-    while i < len(tokens):
-        i += 1
-        token = tokens[i]
-
-        if token == '<<':
-            if key:
-                data[key], i = tokens_to_dict(tokens, i, True)
-            key = None
-            value = []
-        elif token == '>>' or token == 'endobj':
-            if len(value) == 1:
-                value = value[0]  # ['7'] => '7'
-            if key:
-                data[key] = value
-            break
-        elif token.startswith('/'):
-            if key:
-                if value:
-                    if len(value) == 1:
-                        value = value[0]  # ['7'] => '7'
-                    data[key] = value
-                    key = None
-                    value = []
-                else:
-                    value = token
-                    data[key] = value  # '/Type': '/Pages'
-                    key = None
-                    value = []
-                    continue
-            key = token
-            value = []
-        else:
-            if not key:
-                continue
-            value.append(token)
-
-    if index_return:
-        return data, i
-    return data
-
-
-TRAILER_DICT = string_to_dict(TRAILER)
-
-
-def check_trailer(trailer_dict):
-    required_tags = ['/Size', '/Root']
-    # tags = ['/Info','/Prev']
-    for tag in required_tags:
-        if tag not in trailer_dict:
-            return False
-
-    return True
-
-
-print(check_trailer(TRAILER_DICT))
-
-TRAILER_SIZE = int(TRAILER_DICT['/Size'])
-
-TRAILER_ROOT = TRAILER_DICT['/Root']
-
-
-def xref_to_list(xref):
-    lines = xref.split('\n')
-    lines = [line.split() for line in lines if line]
-
-    first = int(lines[1][0])
-    qtd = int(lines[1][1])
-
-    lines = lines[2:]  # removing 'xref' and '0 7', 2 first lines
-
-    sections = []
-    objects = [[first, qtd]]
-
-    for line in lines:
-        if len(line) == 2:
-            sections.append(objects)
-            first = int(line[0])
-            qtd = int(line[1])
-            objects = [[first, qtd]]
-            continue
-
-        line[0] = int(line[0])
-        line[1] = int(line[1])
-        objects.append(line)
-
-    if objects:
-        sections.append(objects)
-
-    return sections
-
-
-XREF_LIST = xref_to_list(XREF)
-
-
-def check_xref_size(xref_list, trailer_size):
-    size = 0
-    for section in xref_list:
-        info = section[0]
-        first = info[0]
-        qtd = info[1]
-        section_size = len(section[1:])
-
-        if qtd != section_size:
-            return False
-
-        size += section_size
-
-    if size != trailer_size:
-        return False
-
-    return True
-
-
-print(check_xref_size(XREF_LIST, TRAILER_SIZE))
-
-
-# f = object_id gen_num f
-# n = byte_offset gen_num n
-
-def get_xref_addresses(xref_list):
-    xref_addresses = {}
-    for section in xref_list:
-        info = section[0]
-        first = info[0]
-        qtd = info[1]
-
-        section = section[1:]  # ignoring info, first element
-
-        for i in range(qtd):
-            obj = section[i]
-
-            if obj[2] == 'f':
-                continue  # ignoring validation on 'f'
-
-            byte_offset = obj[0]
-
-            xref_addresses[first + i] = byte_offset
-
-    return xref_addresses
-
-
-XREF_ADDRESSES = get_xref_addresses(XREF_LIST)
-
-
-def check_xref_addresses(xref_addresses, body, start_body=10):  # start_body=10 for spdf header
-    for obj_id, address in xref_addresses.items():
-
-        if body[address - start_body] != str(obj_id):
-            return False
-
-    return True
-
-
-print(check_xref_addresses(XREF_ADDRESSES, BODY, STARTBODY))
-
-OBJECTS = {1: {}}
-
-
-def update_xref_addresses(objects, xref_addresses, start_body=10):  # start_body=10 for spdf header)
-    for obj_id, address in xref_addresses.items():
-        if obj_id not in objects:
-            objects[obj_id] = {}
-        objects[obj_id]['address'] = address - start_body
-
-
-update_xref_addresses(OBJECTS, XREF_ADDRESSES)
-
-
-def update_contents(objects, body, body_size):
-    for obj_id, obj in objects.items():
-        address = obj['address']
-        i = address
-
-        while (i < body_size):
-            if body[i:i + 6] == 'endobj':
-                break
+    def tokens_to_dict(self, tokens, index=-1, index_return=False):
+        data = {}
+        key = None
+        value = []
+        i = index
+        while i < len(tokens):
             i += 1
+            token = tokens[i]
 
-        obj['content'] = body[address:i + 6]
-
-
-update_contents(OBJECTS, BODY, BODY_SIZE)
-
-
-def remove_comments(objects):
-    for obj_id, obj in objects.items():
-        content = obj['content']
-        new_content = ''
-        start_comment = False
-
-        for i in range(len(content)):
-            if start_comment:
-                if content[i] == '\n':
-                    new_content += '\n'
-                    start_comment = None
-                    continue
-            elif content[i] == '%':
-                start_comment = True
-                continue
+            if token == '<<':
+                if key:
+                    data[key], i = self.tokens_to_dict(tokens, i, True)
+                key = None
+                value = []
+            elif token == '>>' or token == 'endobj':
+                if len(value) == 1:
+                    value = value[0]  # ['7'] => '7'
+                if key:
+                    data[key] = value
+                break
+            elif token.startswith('/'):
+                if key:
+                    if value:
+                        if len(value) == 1:
+                            value = value[0]  # ['7'] => '7'
+                        data[key] = value
+                        key = None
+                        value = []
+                    else:
+                        value = token
+                        data[key] = value  # '/Type': '/Pages'
+                        key = None
+                        value = []
+                        continue
+                key = token
+                value = []
             else:
-                new_content += content[i]
+                if not key:
+                    continue
+                value.append(token)
 
-        obj['content'] = new_content
+        if index_return:
+            return data, i
+        return data
 
+    def string_to_dict(self, dict_str):
+        tokens = dict_str.split()
+        return self.tokens_to_dict(tokens)
 
-remove_comments(OBJECTS)
-
-
-def get_reference_id(tokens):
-    ids = []
-    for i in range(len(tokens)):
-        token = tokens[i]
-        if token == 'R':
-            ref_id = tokens[i - 2]
-            ref_id = int(ref_id)
-            ids.append(ref_id)
-
-    return ids
-
-
-def check_references(objects):
-    for obj in objects.values():
-        content = obj['content']
-        tokens = content.split()
-
-        refs = get_reference_id(tokens)
-        for id in refs:
-            if id not in objects:
+    def check_trailer(self, trailer_dict):
+        required_tags = ['/Size', '/Root']
+        # tags = ['/Info','/Prev']
+        for tag in required_tags:
+            if tag not in trailer_dict:
                 return False
 
-    return True
+        return True
+
+    def xref_to_list(self):
+        lines = self.xref.split('\n')
+        lines = [line.split() for line in lines if line]
+
+        first = int(lines[1][0])
+        qtd = int(lines[1][1])
+
+        lines = lines[2:]  # removing 'xref' and '0 7', 2 first lines
+
+        sections = []
+        objects = [[first, qtd]]
+
+        for line in lines:
+            if len(line) == 2:
+                sections.append(objects)
+                first = int(line[0])
+                qtd = int(line[1])
+                objects = [[first, qtd]]
+                continue
+
+            line[0] = int(line[0])
+            line[1] = int(line[1])
+            objects.append(line)
+
+        if objects:
+            sections.append(objects)
+
+        return sections
+
+    def check_xref_size(self):
+        size = 0
+        for section in self.xref_list:
+            info = section[0]
+            first = info[0]
+            qtd = info[1]
+            section_size = len(section[1:])
+
+            if qtd != section_size:
+                return False
+
+            size += section_size
+
+        if size != self.trailer_size:
+            return False
+
+        return True
+
+    def get_xref_addresses(self):
+        # f = object_id gen_num f
+        # n = byte_offset gen_num n
+        xref_addresses = {}
+        for section in self.xref_list:
+            info = section[0]
+            first = info[0]
+            qtd = info[1]
+
+            section = section[1:]  # ignoring info, first element
+
+            for i in range(qtd):
+                obj = section[i]
+
+                if obj[2] == 'f':
+                    continue  # ignoring validation on 'f'
+
+                byte_offset = obj[0]
+
+                xref_addresses[first + i] = byte_offset
+
+        return xref_addresses
+
+    def check_xref_addresses(self):
+        for obj_id, address in self.xref_addresses.items():
+
+            if self.body[address - self.startbody] != str(obj_id):
+                return False
+
+        return True
+
+    def update_xref_addresses(self):
+        for obj_id, address in self.xref_addresses.items():
+            if obj_id not in self.objects:
+                self.objects[obj_id] = {}
+            self.objects[obj_id]['address'] = address - self.startbody
+
+    def update_contents(self):
+        for obj_id, obj in self.objects.items():
+            address = obj['address']
+            i = address
+
+            while i < self.bodysize:
+                if self.body[i:i + 6] == 'endobj':
+                    break
+                i += 1
+
+            obj['content'] = self.body[address:i + 6]
+
+    def remove_comments(self):
+        for obj_id, obj in self.objects.items():
+            content = obj['content']
+            new_content = ''
+            start_comment = False
+
+            for i in range(len(content)):
+                if start_comment:
+                    if content[i] == '\n':
+                        new_content += '\n'
+                        start_comment = None
+                        continue
+                elif content[i] == '%':
+                    start_comment = True
+                    continue
+                else:
+                    new_content += content[i]
+
+            obj['content'] = new_content
+
+    def get_reference_id(self, tokens):
+        ids = []
+        for i in range(len(tokens)):
+            token = tokens[i]
+            if token == 'R':
+                ref_id = tokens[i - 2]
+                ref_id = int(ref_id)
+                ids.append(ref_id)
+
+        return ids
+
+    def check_references(self):
+        for obj in self.objects.values():
+            content = obj['content']
+            tokens = content.split()
+
+            refs = self.get_reference_id(tokens)
+            for id in refs:
+                if id not in self.objects:
+                    return False
+
+        return True
 
 
-print(check_references(OBJECTS))
 
 
 def get_dictionaries(objects):
